@@ -11,11 +11,15 @@ function App() {
       title: 'Scene 1: Leaving Town',
       decisionLabel: 'Which way would you like to go?',
       choices: [
-        { id: 2, label: 'North' },
-        { id: 3, label: 'South' },
-        { id: 4, label: 'East' },
-        { id: 5, label: 'West' }
+        { id: 2, label: 'N' },
+        { id: 3, label: 'NE' },
+        { id: 4, label: 'SE' },
+        { id: 5, label: 'S' },
+        { id: 6, label: 'SW' },
+        { id: 7, label: 'NW' },
       ]
+      
+      
     },
   ];
 
