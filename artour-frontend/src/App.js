@@ -7,7 +7,7 @@ function App() {
   const scenes = [
     {
       id: 1,
-      imagePath: '/img/image-20231127-195426.png',
+      imagePath: '/img/image-20231127-195530.png',
       title: 'Scene 1: Leaving Town',
       decisionLabel: 'Which way would you like to go?',
       choices: [
@@ -17,8 +17,7 @@ function App() {
         { id: 5, label: 'S' },
         { id: 6, label: 'SW' },
         { id: 7, label: 'NW' },
-      ]
-      
+      ]      
       
     },
   ];
