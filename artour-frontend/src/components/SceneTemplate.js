@@ -1,7 +1,7 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
-  VStack,
   Heading,
   Text,
   SimpleGrid,
@@ -9,26 +9,30 @@ import {
   Button,
   Flex,
 } from '@chakra-ui/react';
-import ARScene from './ARScene'; // Importing ARScene component
+import ARScene from './ARScene';
 
 const SceneTemplate = ({
   imagePath,
   sceneTitle,
   sceneDecisionLabel,
   decisionChoices,
-  onNextScene,
 }) => {
+  const navigate = useNavigate();
+  const isSingleChoice = decisionChoices.length === 1;
+
+  const handleSceneChange = (sceneId) => {
+    navigate(`/scene/${sceneId}`);
+  };
+
   return (
     <Container maxW="container.lg" p={0} h="100vh" overflow="hidden">
       <Flex h="55%" flexDirection="column">
-        {/* AR Scene Container */}
         <Box position="relative" h="100%">
           <ARScene imagePath={imagePath} />
         </Box>
       </Flex>
 
       <Flex h="45%" flexDirection="column" alignItems="center" overflowY="auto" pt={6}>
-        {/* Scene Title and Description */}
         <Heading as="h2" size="md" textAlign="center" fontWeight="normal">
           {sceneTitle}
         </Heading>
@@ -36,15 +40,19 @@ const SceneTemplate = ({
           {sceneDecisionLabel}
         </Text>
 
-        {/* Decision Choices */}
-        <SimpleGrid columns={{ base: 2, md: 2 }} spacing={5} pt={5} w={"75%"}>
+        <SimpleGrid 
+          columns={isSingleChoice ? 1 : 2} 
+          spacing={5} 
+          pt={5} 
+          w={isSingleChoice ? "auto" : "75%"}
+          justifyItems={isSingleChoice ? "center" : "stretch"}>
           {decisionChoices.map((choice, index) => (
             <Button
               key={index}
-              onClick={() => onNextScene(choice.id)}
+              onClick={() => handleSceneChange(choice.id)}
               colorScheme="facebook"
-              variant="outline"
-              size={"md"}
+              variant="solid"
+              size="md"
             >
               {choice.label}
             </Button>
