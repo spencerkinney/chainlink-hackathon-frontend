@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import SceneTemplate from './components/SceneTemplate';
 import CameraPage from './components/CameraPage';
 import CompletePage from './components/CompletePage';
@@ -14,12 +14,12 @@ function App() {
       title: 'Scene 1: The Party Departs',
       decisionLabel: 'Which way would you like to go?',
       choices: [
-        { id: 2, label: 'N' },
-        { id: 2, label: 'NE' },
-        { id: 2, label: 'SE' },
-        { id: 2, label: 'S' },
-        { id: 2, label: 'SW' },
-        { id: 2, label: 'NW' },
+        { id: 6, label: 'NW' },
+        { id: 6, label: 'NE' },
+        { id: 6, label: 'W' },
+        { id: 6, label: 'E' },
+        { id: 6, label: 'SW' },
+        { id: 6, label: 'SE' },
       ]
     },
     // Scene 2
@@ -29,9 +29,9 @@ function App() {
       title: 'Scene 2: Enter the Wild',
       decisionLabel: 'What do you hope to acquire?',
       choices: [
-        { id: 3, label: 'Weaponry' },
-        { id: 3, label: 'Items' },
-        { id: 3, label: 'Wealth' },
+        { id: 6, label: 'Weaponry' },
+        { id: 6, label: 'Items' },
+        { id: 6, label: 'Wealth' },
       ]
     },
     // Scene 3
@@ -41,7 +41,7 @@ function App() {
       title: 'Scene 3: A Stranger in the Wilderness',
       decisionLabel: 'I hear there is a beast on the loose nearby!',
       choices: [
-        { id: 4, label: 'Continue' },
+        { id: 6, label: 'Continue' },
       ]
     },
     // Scene 4
@@ -51,7 +51,7 @@ function App() {
       title: 'Scene 4: Prepare for Combat!',
       decisionLabel: 'Roll the dice',
       choices: [
-        { id: 5, label: 'I have rolled the dice' },
+        { id: 6, label: 'I have rolled the dice' },
       ]
     },
     // Scene 5
@@ -83,7 +83,8 @@ function App() {
             key={scene.id}
             path={`/scene/${scene.id}`}
             element={
-              <SceneTemplate 
+              <SceneTemplate
+                sceneId = {scene.id}
                 imagePath={scene.imagePath}
                 sceneTitle={scene.title}
                 sceneDecisionLabel={scene.decisionLabel}

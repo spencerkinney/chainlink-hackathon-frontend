@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -10,8 +10,10 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import ARScene from './ARScene';
+import CompletePage from './CompletePage';
 
 const SceneTemplate = ({
+  sceneId,
   imagePath,
   sceneTitle,
   sceneDecisionLabel,
@@ -20,9 +22,22 @@ const SceneTemplate = ({
   const navigate = useNavigate();
   const isSingleChoice = decisionChoices.length === 1;
 
-  const handleSceneChange = (sceneId) => {
-    navigate(`/scene/${sceneId}`);
+  // State to track if the scene has been submitted
+  const [submitted, setSubmitted] = useState(false);
+  // State to track the progress value
+  const [progress, setProgress] = useState(0);
+
+  const displayCompletePage = (currentSceneId) => {
+    // Update the progress value based on the currentSceneId or other logic
+    // For example, setProgress(100) if the scene is complete
+    setProgress(currentSceneId * 20);
+    // Set the submitted state to true to display the CompletePage
+    setSubmitted(true);
   };
+
+  if (submitted) {
+    return <CompletePage progress={progress} />;
+  }
 
   return (
     <Container maxW="container.lg" p={0} h="100vh" overflow="hidden">
@@ -49,7 +64,7 @@ const SceneTemplate = ({
           {decisionChoices.map((choice, index) => (
             <Button
               key={index}
-              onClick={() => handleSceneChange(choice.id)}
+              onClick={() => displayCompletePage(sceneId)}
               colorScheme="facebook"
               variant="outline"
               size="md"
