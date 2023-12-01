@@ -41,7 +41,7 @@ function App() {
       title: 'Scene 3: A Stranger in the Wilderness',
       decisionLabel: 'I hear there is a beast on the loose nearby!',
       choices: [
-        { id: 0, label: 'Return to Camera' },
+        { id: 4, label: 'Continue' },
       ]
     },
     // Scene 4
@@ -51,7 +51,7 @@ function App() {
       title: 'Scene 4: Prepare for Combat!',
       decisionLabel: 'Roll the dice',
       choices: [
-        { id: 5, label: 'Roll Dice' },
+        { id: 5, label: 'I have rolled the dice' },
       ]
     },
     // Scene 5

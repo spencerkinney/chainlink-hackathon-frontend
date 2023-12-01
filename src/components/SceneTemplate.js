@@ -51,7 +51,7 @@ const SceneTemplate = ({
               key={index}
               onClick={() => handleSceneChange(choice.id)}
               colorScheme="facebook"
-              variant="solid"
+              variant="outline"
               size="md"
             >
               {choice.label}
