@@ -20,7 +20,7 @@ function CompletePage({ progress }) {
         <Center h="100vh">
             <VStack spacing={4}>
                 <CheckboxIcon boxSize={12} color="green.300" />
-                <Heading>Scene Completed</Heading>
+                <Heading>Scene {progress / 20} Completed</Heading>
                 <Text fontSize="xl">{message}</Text>
                 <Progress value={progress} hasStripe width="80%" colorScheme="green" size="lg" />
             </VStack>
