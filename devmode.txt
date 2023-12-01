@@ -1,0 +1,4 @@
+to run locally, run the following commands
+npm install to install packages
+
+$env:HTTPS='true'; npm start
