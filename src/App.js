@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-route
 import SceneTemplate from './components/SceneTemplate';
 import CameraPage from './components/CameraPage';
 import CompletePage from './components/CompletePage';
+import GameMasterPage from './components/GameMasterPage';
 
 function App() {
   // Scene data
@@ -66,6 +67,13 @@ function App() {
     },
   ];
 
+  const qrCodes = [
+    '/img/codes/Scene-1.png',
+    '/img/codes/Scene-2.png',
+    '/img/codes/Scene-3.png',
+    '/img/codes/Scene-4.png',
+    '/img/codes/Scene-5.png',
+  ]
   const [currentSceneId, setCurrentSceneId] = useState(1); // Starting scene
 
   const currentScene = scenes.find(scene => scene.id === currentSceneId);
@@ -96,6 +104,7 @@ function App() {
         ))}
         <Route path={`/scene/0`} element={<CameraPage/>}/>
         <Route path={`/scene/6`} element={<CompletePage/>}/>
+        <Route path={`/gamemaster`} element={<GameMasterPage qrCodes={qrCodes}/>}/>
       </Routes>
     </Router>
   );
