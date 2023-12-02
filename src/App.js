@@ -4,6 +4,7 @@ import SceneTemplate from './components/SceneTemplate';
 import CameraPage from './components/CameraPage';
 import CompletePage from './components/CompletePage';
 import GameMasterPage from './components/GameMasterPage';
+import CharacterPage from './components/CharacterPage';
 
 function App() {
   // Scene data
@@ -108,6 +109,7 @@ function App() {
         <Route path={`/scene/0`} element={<CameraPage/>}/>
         <Route path={`/scene/6`} element={<CompletePage/>}/>
         <Route path={`/gamemaster`} element={<GameMasterPage qrCodes={qrCodes} logoPath={logoPath}/>}/>
+        <Route path="/character" element={<CharacterPage onGameStart={() => handleNextScene(1)} />} />
       </Routes>
     </Router>
   );
