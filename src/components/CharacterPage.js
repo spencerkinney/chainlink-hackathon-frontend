@@ -1,7 +1,7 @@
 // CharacterPage.js
 import React from 'react';
 import {
-  Box, Image, Button, VStack, Text, Container, useColorModeValue
+  Box, Image, Button, VStack, Text, Container, useColorModeValue, Badge, HStack, Tag
 } from '@chakra-ui/react';
 
 const CharacterPage = ({ onGameStart }) => {
@@ -19,9 +19,15 @@ const CharacterPage = ({ onGameStart }) => {
       px={4}
       width="full"
     >
-      <Text fontSize="2xl" fontWeight="normal" textAlign="center">
-        Alarmin The Outcast
-      </Text>
+      <HStack spacing={2}>
+        <Text fontSize="2xl" fontWeight="normal" textAlign="center">
+          Alarmin The Outcast
+        </Text>
+        <Tag colorScheme="purple" variant="subtle" fontSize={"0.8em"}>
+          You
+        </Tag>
+      </HStack>
+
       <Box
         borderRadius="md"
         boxSize={['250px', '300px']} // Responsive image size
@@ -47,7 +53,7 @@ const CharacterPage = ({ onGameStart }) => {
         px={8}
         onClick={onGameStart}
       >
-        START
+        JOIN GAME
       </Button>
     </VStack>
   );
