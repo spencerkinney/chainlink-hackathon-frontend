@@ -74,6 +74,9 @@ function App() {
     '/img/codes/Scene-4.png',
     '/img/codes/Scene-5.png',
   ]
+
+  const logoPath = '/img/logo/logo.png'
+
   const [currentSceneId, setCurrentSceneId] = useState(1); // Starting scene
 
   const currentScene = scenes.find(scene => scene.id === currentSceneId);
@@ -104,7 +107,7 @@ function App() {
         ))}
         <Route path={`/scene/0`} element={<CameraPage/>}/>
         <Route path={`/scene/6`} element={<CompletePage/>}/>
-        <Route path={`/gamemaster`} element={<GameMasterPage qrCodes={qrCodes}/>}/>
+        <Route path={`/gamemaster`} element={<GameMasterPage qrCodes={qrCodes} logoPath={logoPath}/>}/>
       </Routes>
     </Router>
   );

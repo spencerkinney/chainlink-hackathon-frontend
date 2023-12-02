@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Heading, Image, Button, Flex, Text, Skeleton } from '@chakra-ui/react';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 
-const GameMasterPage = ({ qrCodes }) => {
+const GameMasterPage = ({ qrCodes, logoPath }) => {
   const [currentQRIndex, setCurrentQRIndex] = useState(0);
   const [isImageLoading, setIsImageLoading] = useState(true);
 
@@ -21,7 +21,10 @@ const GameMasterPage = ({ qrCodes }) => {
       color="white"
       minH="100vh"
     >
-      <Text mb={4} fontSize="2xl">Game Master Control</Text>
+      <Flex align="center" mb={6} width="full" justify="center">
+        <Image src={logoPath} alt="Logo" maxW="60px" mr={4} />
+        <Text fontSize="xl">Game Master Control</Text>
+      </Flex>
       <Box 
         border="1px" 
         borderColor="gray.600"
@@ -37,7 +40,7 @@ const GameMasterPage = ({ qrCodes }) => {
           src={qrCodes[currentQRIndex]} 
           alt={`QR Code for Scene ${currentQRIndex + 1}`} 
           maxW="250px"
-          loading="lazy"  // Native lazy loading
+          loading="lazy"
           onLoad={() => setIsImageLoading(false)}
           display={isImageLoading ? 'none' : 'block'}
         />
