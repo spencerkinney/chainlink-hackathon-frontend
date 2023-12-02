@@ -68,11 +68,11 @@ function App() {
   ];
 
   const qrCodes = [
-    '/img/codes/Scene-1.png',
-    '/img/codes/Scene-2.png',
-    '/img/codes/Scene-3.png',
-    '/img/codes/Scene-4.png',
-    '/img/codes/Scene-5.png',
+    '/img/codes/Scene-1.jpeg',
+    '/img/codes/Scene-2.jpeg',
+    '/img/codes/Scene-3.jpeg',
+    '/img/codes/Scene-4.jpeg',
+    '/img/codes/Scene-5.jpeg',
   ]
 
   const logoPath = '/img/logo/logo.png'
