@@ -1,26 +1,21 @@
 import { Box, Heading, Text, CheckIcon, Center, VStack, CheckboxIcon, Progress } from "@chakra-ui/react";
 
-function CompletePage({ progress }) {
-
+function CompletePage({ progress, sceneTitle }) {
     let message;
-    if (progress <= 20) {
-        message = "Congrats! You've started your journey.";
-    } else if (progress <= 40) {
-        message = "Congrats! You're making great progress.";
-    } else if (progress <= 60) {
-        message = "Congrats! You're more than halfway through your journey.";
-    } else if (progress <= 80) {
-        message = "Congrats! Almost completed your journey.";
+
+    if (progress < 100) {
+        // For all scenes except the last one
+        message = `You've completed ${sceneTitle}`;
     } else {
-        message = "Completed! Time to mint your NFT!";
+        // Special message for the last scene
+        message = "Completed! Time to mint your NFT.";
     }
 
-    
     return (
         <Center h="100vh">
             <VStack spacing={4}>
                 <CheckboxIcon boxSize={12} color="green.300" />
-                <Heading>Scene {progress / 20} Completed</Heading>
+                <Heading>Scene {progress / 20} completed</Heading>
                 <Text fontSize="xl">{message}</Text>
                 <Progress value={progress} hasStripe width="80%" colorScheme="green" size="lg" />
             </VStack>

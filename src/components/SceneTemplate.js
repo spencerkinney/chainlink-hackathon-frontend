@@ -36,7 +36,7 @@ const SceneTemplate = ({
   };
 
   if (submitted) {
-    return <CompletePage progress={progress} />;
+    return <CompletePage progress={progress} sceneTitle={sceneTitle}/>;
   }
 
   return (
