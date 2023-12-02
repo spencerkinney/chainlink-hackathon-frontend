@@ -33,6 +33,7 @@ const GameMasterPage = ({ qrCodes }) => {
           src={qrCodes[currentQRIndex]} 
           alt={`QR Code for Scene ${currentQRIndex + 1}`} 
           maxW="250px"
+          lazyLoad
         />
       </Box>
       <Button 
