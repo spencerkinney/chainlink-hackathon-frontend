@@ -67,7 +67,7 @@ const ImageGenerator = () => {
         <form onSubmit={handleSubmit} width="full">
           <Input
             ref={inputRef}
-            placeholder="e.g. cartoon cowboy monkey astronaut"
+            placeholder="e.g. cartoon monkey astronaut"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             focusBorderColor="whatsapp.200"
