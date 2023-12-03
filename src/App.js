@@ -5,6 +5,7 @@ import CameraPage from './components/CameraPage';
 import CompletePage from './components/CompletePage';
 import GameMasterPage from './components/GameMasterPage';
 import CharacterPage from './components/CharacterPage';
+import ImageGenerator from './components/ImageGenerator';
 
 function App() {
   // Scene data
@@ -110,6 +111,7 @@ function App() {
         <Route path={`/scene/6`} element={<CompletePage/>}/>
         <Route path={`/gamemaster`} element={<GameMasterPage qrCodes={qrCodes} logoPath={logoPath}/>}/>
         <Route path="/character" element={<CharacterPage onGameStart={() => handleNextScene(1)} />} />
+        <Route path="/sd" element={<ImageGenerator/>} />
       </Routes>
     </Router>
   );

@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Box,
   Input,
-  Button,
-  Image,
-  Skeleton,
   VStack,
   useToast,
+  Text,
+  Container,
+  Skeleton,
+  Image,
+  Kbd,
+  Button,
 } from '@chakra-ui/react';
 
 const ImageGenerator = () => {
@@ -14,8 +17,16 @@ const ImageGenerator = () => {
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
+  const inputRef = useRef(null);
 
-  const handleSubmit = async () => {
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (isLoading) return; // Prevent spamming
+
     setIsLoading(true);
     setImages([]);
 
@@ -29,7 +40,7 @@ const ImageGenerator = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
+        throw new Error("Server error, please try again.");
       }
 
       const result = await response.json();
@@ -37,7 +48,7 @@ const ImageGenerator = () => {
     } catch (error) {
       toast({
         title: "Error",
-        description: error.message,
+        description: `${error.message} If this persists, please retry.`,
         status: "error",
         duration: 9000,
         isClosable: true,
@@ -48,26 +59,47 @@ const ImageGenerator = () => {
   };
 
   return (
-    <VStack spacing={4}>
-      <Input
-        placeholder="Enter your prompt here"
-        value={prompt}
-        onChange={(e) => setPrompt(e.target.value)}
-      />
-      <Button colorScheme="blue" onClick={handleSubmit} isLoading={isLoading}>
-        Generate Image
-      </Button>
+    <Container centerContent py="6" maxW={"2xl"} pt={24}>
+      <VStack spacing="8">
+        <Text fontSize="lg">
+          Enter a prompt and press <Kbd>Enter</Kbd> to submit. Note that it sometimes fails on first try, so please retry if it doesn't work.
+        </Text>
+        <form onSubmit={handleSubmit} width="full">
+          <Input
+            ref={inputRef}
+            placeholder="e.g. cartoon cowboy monkey astronaut"
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            focusBorderColor="whatsapp.200"
+            size="lg"
+            minW="xl"
+            variant="flushed"
+            mb="4"
+            sx={{
+              '::placeholder': {
+                color: 'whiteAlpha.600',
+                opacity: 1,
+              },
+            }}
+          />
+        </form>
 
-      {isLoading ? (
-        <Skeleton height="250px" width="500px" />
-      ) : (
-        images.map((image, index) => (
-          <Box key={index} boxSize="sm">
-            <Image src={`data:image/png;base64,${image}`} alt={`Generated Image ${index + 1}`} />
-          </Box>
-        ))
-      )}
-    </VStack>
+        <VStack spacing="4" width="full">
+          {isLoading ? (
+            <>
+              <Skeleton height="250px" width="full" />
+              <Skeleton height="250px" width="full" />
+            </>
+          ) : (
+            images.map((image, index) => (
+              <Box key={index} width="full">
+                <Image src={`data:image/png;base64,${image}`} alt={`Generated Image ${index + 1}`} />
+              </Box>
+            ))
+          )}
+        </VStack>
+      </VStack>
+    </Container>
   );
 };
 
