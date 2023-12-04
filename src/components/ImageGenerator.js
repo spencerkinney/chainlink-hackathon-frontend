@@ -59,7 +59,7 @@ const ImageGenerator = () => {
   };
 
   return (
-    <Container centerContent py="6" maxW={"2xl"} pt={24}>
+    <Container centerContent py="12" maxW={"2xl"} pt={24} minH={"100vh"}>
       <VStack spacing="8">
         <Text fontSize="lg">
           Enter a prompt and press <Kbd>Enter</Kbd> to submit. Note that it sometimes fails on first try, so please retry if it doesn't work.
@@ -70,9 +70,9 @@ const ImageGenerator = () => {
             placeholder="e.g. cartoon monkey astronaut"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            focusBorderColor="whatsapp.200"
+            focusBorderColor="green.800"
             size="lg"
-            minW="xl"
+            minW={["sm", "lg", "xl"]}
             variant="flushed"
             mb="4"
             sx={{
@@ -87,8 +87,8 @@ const ImageGenerator = () => {
         <VStack spacing="4" width="full">
           {isLoading ? (
             <>
-              <Skeleton height="250px" width="full" />
-              <Skeleton height="250px" width="full" />
+              <Skeleton height="400px" width="full" />
+              <Skeleton height="400px" width="full" />
             </>
           ) : (
             images.map((image, index) => (
