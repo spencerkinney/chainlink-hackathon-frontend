@@ -11,6 +11,7 @@ import {
   Kbd,
   Button,
 } from '@chakra-ui/react';
+import axios from 'axios';
 
 const ImageGenerator = () => {
   const [prompt, setPrompt] = useState('');
@@ -31,25 +32,35 @@ const ImageGenerator = () => {
     setImages([]);
 
     try {
-      const response = await fetch('http://chainlink-hack-backend.eba-az5zibga.us-east-1.elasticbeanstalk.com/generate-image', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ prompt }),
-      });
+      // Read the RapidAPI key from an environment variable
+      const apiKey = process.env.REACT_APP_RAPIDAPI_KEY;
 
-      if (!response.ok) {
-        throw new Error("Server error, please try again.");
+      // Create an axios request configuration
+      const options = {
+        method: 'POST',
+        url: 'https://stable-diffusion10.p.rapidapi.com/generate-image',
+        headers: {
+          'content-type': 'application/json',
+          'X-RapidAPI-Key': apiKey,
+          'X-RapidAPI-Host': 'stable-diffusion10.p.rapidapi.com',
+        },
+        data: {
+          prompt: prompt,
+        },
+      };
+
+      const response = await axios.request(options); // Use axios for the request
+
+      if (!response.status === 200) {
+        throw new Error('Server error, please try again.');
       }
 
-      const result = await response.json();
-      setImages(result.data.images);
+      setImages(response.data.data.images);
     } catch (error) {
       toast({
-        title: "Error",
+        title: 'Error',
         description: `${error.message} If this persists, please retry.`,
-        status: "error",
+        status: 'error',
         duration: 9000,
         isClosable: true,
       });
