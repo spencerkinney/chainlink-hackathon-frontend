@@ -31,7 +31,7 @@ const ImageGenerator = () => {
     setImages([]);
 
     try {
-      const response = await fetch('https://stablediff-664a3266e9c5.herokuapp.com/generate-image', {
+      const response = await fetch('http://chainlink-hack-backend.eba-az5zibga.us-east-1.elasticbeanstalk.com/generate-image', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
