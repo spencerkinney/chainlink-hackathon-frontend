@@ -34,7 +34,10 @@ const ImageGenerator = () => {
     try {
       // Read the RapidAPI key from an environment variable
       const apiKey = process.env.REACT_APP_RAPIDAPI_KEY;
-
+    
+      // Set the timeout to 120 seconds (120,000 milliseconds)
+      const customTimeout = 120000;
+    
       // Create an axios request configuration
       const options = {
         method: 'POST',
@@ -47,14 +50,15 @@ const ImageGenerator = () => {
         data: {
           prompt: prompt,
         },
+        timeout: customTimeout,
       };
-
-      const response = await axios.request(options); // Use axios for the request
-
+    
+      const response = await axios.request(options);
+    
       if (!response.status === 200) {
         throw new Error('Server error, please try again.');
       }
-
+    
       setImages(response.data.data.images);
     } catch (error) {
       toast({
