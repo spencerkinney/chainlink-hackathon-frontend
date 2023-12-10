@@ -13,12 +13,13 @@ import {
   Skeleton,
   Tag, // Import Tag component
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
-const LoadingSkeleton = () => (
-  <Skeleton width="100%" height="300px" />
-);
+const LoadingSkeleton = () => <Skeleton width="100%" height="300px" />;
 
 const LatestMintsGallery = () => {
+  const navigate = useNavigate();
+
   // State to store the latest mints data
   const [latestMints, setLatestMints] = useState([]);
 
@@ -113,66 +114,72 @@ const LatestMintsGallery = () => {
         gap={8} // Increased gap between gallery items
         justifyContent="center"
       >
-        {latestMints.length > 0 ? (
-          latestMints.map((mint, index) => (
-            <Box
-              key={index}
-              borderWidth="1px"
-              borderRadius="md"
-              overflow="hidden"
-              p={6} // Increased padding
-              boxShadow="md" // Added box shadow for a subtle look
-            >
-              <Link
-                href={mint?.image} // Assuming 'image' is the image URL property in your JSON
-                target="_blank"
-                rel="noopener noreferrer"
+        {latestMints.length > 0
+          ? latestMints.map((mint, index) => (
+              <Box
+                key={index}
+                borderWidth="1px"
+                borderRadius="md"
+                overflow="hidden"
+                p={6} // Increased padding
+                boxShadow="md" // Added box shadow for a subtle look
               >
-                <Image
-                  src={mint?.image}
-                  alt={`Mint ${index + 1}`}
-                  maxH="300px"
-                  objectFit="cover"
-                />
-              </Link>
-              <Text fontSize="lg" fontWeight="bold" mt={4}>
-                {mint?.name} {/* Assuming 'name' is the name property in your JSON */}
-              </Text>
-              <Text color="gray.500" fontSize="sm" mb={2}>
-                {mint?.description} {/* Display description in muted text color */}
-              </Text>
-              <Tag
-                size="sm"
-                variant="solid"
-                colorScheme={getTagColor(mint?.attributes[0].value)}
-                textTransform="capitalize" // Capitalize the first letter
-              >
-                {mint?.attributes[0].value} {/* Display trait type as a small tag */}
-              </Tag>
-              {/* Tooltip */}
-              <Tooltip label={`Verified IPFS hash for ${mint?.name}: ${extractIpfsHash(mint?.image)}`} placement="top">
                 <Link
-                  fontSize="md"
-                  mt={2}
-                  color="teal.500"
-                  href={mint?.image}
+                  href={mint?.image} // Assuming 'image' is the image URL property in your JSON
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Code whiteSpace="pre-wrap" width={"100%"}>
-                    {extractIpfsHash(mint?.image)}
-                  </Code>{" "}
-                  {/* Displaying the extracted IPFS hash in code style */}
+                  <Image
+                    src={mint?.image}
+                    alt={`Mint ${index + 1}`}
+                    maxH="300px"
+                    objectFit="cover"
+                  />
                 </Link>
-              </Tooltip>
-            </Box>
-          ))
-        ) : (
-          // Loading skeletons
-          Array.from({ length: 4 }).map((_, index) => (
-            <LoadingSkeleton key={index} />
-          ))
-        )}
+                <Text fontSize="lg" fontWeight="bold" mt={4}>
+                  {mint?.name}{" "}
+                  {/* Assuming 'name' is the name property in your JSON */}
+                </Text>
+                <Text color="gray.500" fontSize="sm" mb={2}>
+                  {mint?.description}{" "}
+                  {/* Display description in muted text color */}
+                </Text>
+                <Tag
+                  size="sm"
+                  variant="solid"
+                  colorScheme={getTagColor(mint?.attributes[0].value)}
+                  textTransform="capitalize" // Capitalize the first letter
+                >
+                  {mint?.attributes[0].value}{" "}
+                  {/* Display trait type as a small tag */}
+                </Tag>
+                {/* Tooltip */}
+                <Tooltip
+                  label={`Verified IPFS hash for ${
+                    mint?.name
+                  }: ${extractIpfsHash(mint?.image)}`}
+                  placement="top"
+                >
+                  <Link
+                    fontSize="md"
+                    mt={2}
+                    color="teal.500"
+                    href={mint?.image}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Code whiteSpace="pre-wrap" width={"100%"}>
+                      {extractIpfsHash(mint?.image)}
+                    </Code>{" "}
+                    {/* Displaying the extracted IPFS hash in code style */}
+                  </Link>
+                </Tooltip>
+              </Box>
+            ))
+          : // Loading skeletons
+            Array.from({ length: 4 }).map((_, index) => (
+              <LoadingSkeleton key={index} />
+            ))}
       </Grid>
 
       {/* Back button */}
@@ -182,7 +189,7 @@ const LatestMintsGallery = () => {
         size="sm"
         mx="auto"
         display="block"
-        onClick={() => window.history.back()}
+        onClick={() => navigate("/")}
       >
         Go back home
       </Button>
