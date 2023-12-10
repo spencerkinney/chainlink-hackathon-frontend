@@ -40,7 +40,8 @@ const LatestMintsGallery = () => {
 
       if (response.status === 200) {
         const data = await response.json();
-        setLatestMints(data);
+        setLatestMints(data.data); // Access the image URL from the 'data' array
+        console.log("Latest mints data:", data);
       } else {
         console.error("Error fetching latest mints:", response.statusText);
       }
@@ -70,7 +71,7 @@ const LatestMintsGallery = () => {
         {latestMints.length > 0 ? (
           latestMints.map((mint) => (
             <Box
-              key={mint.ipfsHash}
+              key={mint}
               borderWidth="1px"
               borderRadius="md"
               overflow="hidden"
@@ -78,19 +79,19 @@ const LatestMintsGallery = () => {
               boxShadow="md" // Added box shadow for a subtle look
             >
               <Link
-                href={mint.ipfsLink}
+                href={mint}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <Image
-                  src={mint.image}
-                  alt={mint.title}
+                  src={mint}
+                  alt="Latest Mint"
                   maxH="300px"
                   objectFit="cover"
                 />
               </Link>
               <Text fontSize="lg" fontWeight="bold" mt={4}>
-                {mint.title}
+                Mint Title
               </Text>
               <Badge
                 variant="solid"
@@ -101,7 +102,7 @@ const LatestMintsGallery = () => {
                 IPFS Hash
               </Badge>
               <Text fontSize="md" mt={2}>
-                {mint.ipfsHash}
+                {mint}
               </Text>
             </Box>
           ))
