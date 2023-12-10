@@ -6,6 +6,7 @@ import CompletePage from './components/CompletePage';
 import GameMasterPage from './components/GameMasterPage';
 import CharacterPage from './components/CharacterPage';
 import ImageGenerator from './components/ImageGenerator';
+import LatestMintsGallery from './components/LatestMintsGallery';
 
 function App() {
   // Scene data
@@ -112,6 +113,7 @@ function App() {
         <Route path={`/`} element={<GameMasterPage qrCodes={qrCodes} logoPath={logoPath}/>}/>
         <Route path="/character" element={<CharacterPage onGameStart={() => handleNextScene(1)} />} />
         <Route path="/sd" element={<ImageGenerator/>} />
+        <Route path="/gallery" element={<LatestMintsGallery/>} />
       </Routes>
     </Router>
   );
