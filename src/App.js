@@ -109,7 +109,7 @@ function App() {
         ))}
         <Route path={`/scene/0`} element={<CameraPage/>}/>
         <Route path={`/scene/6`} element={<CompletePage/>}/>
-        <Route path={`/gamemaster`} element={<GameMasterPage qrCodes={qrCodes} logoPath={logoPath}/>}/>
+        <Route path={`/`} element={<GameMasterPage qrCodes={qrCodes} logoPath={logoPath}/>}/>
         <Route path="/character" element={<CharacterPage onGameStart={() => handleNextScene(1)} />} />
         <Route path="/sd" element={<ImageGenerator/>} />
       </Routes>

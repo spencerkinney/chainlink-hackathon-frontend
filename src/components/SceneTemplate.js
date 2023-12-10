@@ -8,6 +8,8 @@ import {
   Container,
   Button,
   Flex,
+  Badge,
+  Tag,
 } from '@chakra-ui/react';
 import ARScene from './ARScene';
 import CompletePage from './CompletePage';
@@ -21,22 +23,21 @@ const SceneTemplate = ({
 }) => {
   const navigate = useNavigate();
   const isSingleChoice = decisionChoices.length === 1;
-
-  // State to track if the scene has been submitted
   const [submitted, setSubmitted] = useState(false);
-  // State to track the progress value
   const [progress, setProgress] = useState(0);
 
+  // Splitting the sceneTitle into 'Scene X' and the rest
+  const titleParts = sceneTitle.split(': ');
+  const badgeTitle = titleParts[0];
+  const remainingTitle = titleParts.length > 1 ? titleParts[1] : '';
+
   const displayCompletePage = (currentSceneId) => {
-    // Update the progress value based on the currentSceneId or other logic
-    // For example, setProgress(100) if the scene is complete
     setProgress(currentSceneId * 20);
-    // Set the submitted state to true to display the CompletePage
     setSubmitted(true);
   };
 
   if (submitted) {
-    return <CompletePage progress={progress} sceneTitle={sceneTitle}/>;
+    return <CompletePage progress={progress} sceneTitle={sceneTitle} />;
   }
 
   return (
@@ -48,9 +49,10 @@ const SceneTemplate = ({
       </Flex>
 
       <Flex h="45%" flexDirection="column" alignItems="center" overflowY="auto" pt={6}>
-        <Heading as="h2" size="md" textAlign="center" fontWeight="normal">
-          {sceneTitle}
-        </Heading>
+        <Flex as="h2" size="md" textAlign="center" fontWeight="normal" alignItems="center" fontSize='1.2em'>
+          <Badge mr={2} colorScheme="blue" fontSize='0.8em'>{badgeTitle}</Badge>
+          {remainingTitle}
+        </Flex>
         <Text mt={3} textAlign="center" color="gray.500">
           {sceneDecisionLabel}
         </Text>

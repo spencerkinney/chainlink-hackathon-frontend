@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Heading, Image, Button, Flex, Text, Skeleton, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton } from '@chakra-ui/react';
 import { ChevronRightIcon } from '@chakra-ui/icons';
 
@@ -7,9 +7,18 @@ const GameMasterPage = ({ qrCodes, logoPath }) => {
   const [isImageLoading, setIsImageLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(true);
 
+  // Reset loading state when the QR code changes
+  useEffect(() => {
+    if (isImageLoading) {
+      console.log('Image is loading');
+    } else {
+      console.log('Image has loaded');
+    }
+  }, [isImageLoading]);
+  
+
   const handleNextScene = () => {
     setCurrentQRIndex((prevIndex) => (prevIndex + 1) % qrCodes.length);
-    setIsImageLoading(true); // Reset loading state for new image
   };
 
   const handleCloseModal = () => {
@@ -29,14 +38,14 @@ const GameMasterPage = ({ qrCodes, logoPath }) => {
       <Flex align="center" mb={6} width="full" justify="center">
         <Modal isOpen={isOpen} onClose={handleCloseModal}>
           <ModalOverlay/>
-	  <ModalContent>
-	    <ModalHeader>Welcome to Ceptor Club x Artour</ModalHeader>
-	    <ModalCloseButton/>
+          <ModalContent p={4}>
+            <ModalHeader>Welcome to Ceptor Club x Artour</ModalHeader>
+            <ModalCloseButton/>
             <ModalBody>
-	      <Text>This game will take you on an adventure of art and technology. Scenarios will be presented to you, choose your options wisely. If you complete the adventure, loot will be minted as an NFT and gifted to you!</Text>
-	    </ModalBody>
+              <Text>This game will take you on an adventure of art and technology. Scenarios will be presented to you, choose your options wisely. If you complete the adventure, loot will be minted as an NFT and gifted to you!</Text>
+            </ModalBody>
           </ModalContent>
-	</Modal>
+        </Modal>
         <Image src={logoPath} alt="Logo" maxW="60px" mr={4} />
         <Text fontSize="xl">Game Master Control</Text>
       </Flex>
@@ -52,10 +61,11 @@ const GameMasterPage = ({ qrCodes, logoPath }) => {
         <Heading size="md" mb={4}>{`Scene ${currentQRIndex + 1}`}</Heading>
         {isImageLoading && <Skeleton height="250px" width="250px"/>}
         <Image 
+          key={qrCodes[currentQRIndex]}
           src={qrCodes[currentQRIndex]} 
           alt={`QR Code for Scene ${currentQRIndex + 1}`} 
           maxW="250px"
-          loading="lazy"
+          loading="eager"
           onLoad={() => setIsImageLoading(false)}
           display={isImageLoading ? 'none' : 'block'}
         />
