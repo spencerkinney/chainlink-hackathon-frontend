@@ -113,7 +113,7 @@ function App() {
         <Route path={`/`} element={<GameMasterPage qrCodes={qrCodes} logoPath={logoPath}/>}/>
         <Route path="/character" element={<CharacterPage onGameStart={() => handleNextScene(1)} />} />
         <Route path="/sd" element={<ImageGenerator/>} />
-        <Route path="/gallery" element={<LatestMintsGallery/>} />
+        <Route path="/loot" element={<LatestMintsGallery/>} />
       </Routes>
     </Router>
   );

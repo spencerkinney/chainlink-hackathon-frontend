@@ -8,12 +8,10 @@ import {
   Image,
   Link,
   Text,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverBody,
+  Tooltip, // Import Tooltip component
   Code,
-  Skeleton
+  Skeleton,
+  Tag, // Import Tag component
 } from "@chakra-ui/react";
 
 const LoadingSkeleton = () => (
@@ -50,17 +48,18 @@ const LatestMintsGallery = () => {
     return parts[parts.length - 1];
   };
 
-  // Function to generate the popover content
-  const getPopoverContent = (mint) => {
-    return (
-      <PopoverContent>
-        <PopoverBody>
-          {/* Displaying the verified IPFS hash for the mint */}
-          Verified IPFS hash for {mint.name}:{" "}
-          <Code whiteSpace="pre-wrap" >{extractIpfsHash(mint.image)}</Code>
-        </PopoverBody>
-      </PopoverContent>
-    );
+  // Function to get the tag color based on the category
+  const getTagColor = (category) => {
+    switch (category) {
+      case "wealth":
+        return "yellow"; // Set the color for wealth
+      case "weapon":
+        return "red"; // Set the color for weapon
+      case "item":
+        return "green"; // Set the color for item
+      default:
+        return "gray"; // Default color
+    }
   };
 
   // Fetch latest mints data when the component mounts
@@ -104,7 +103,7 @@ const LatestMintsGallery = () => {
   return (
     <Container maxW="container.md" py={8}>
       {/* Title */}
-      <Heading as="h1" size="xl" textAlign="center" mb={6}>
+      <Heading as="h1" size="lg" textAlign="center" mb={6}>
         Recently Opened Loot
       </Heading>
 
@@ -125,38 +124,47 @@ const LatestMintsGallery = () => {
               boxShadow="md" // Added box shadow for a subtle look
             >
               <Link
-                href={mint.image} // Assuming 'image' is the image URL property in your JSON
+                href={mint?.image} // Assuming 'image' is the image URL property in your JSON
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <Image
-                  src={mint.image}
+                  src={mint?.image}
                   alt={`Mint ${index + 1}`}
                   maxH="300px"
                   objectFit="cover"
                 />
               </Link>
               <Text fontSize="lg" fontWeight="bold" mt={4}>
-                {mint.name} {/* Assuming 'name' is the name property in your JSON */}
+                {mint?.name} {/* Assuming 'name' is the name property in your JSON */}
               </Text>
-              <Popover placement="top">
-                <PopoverTrigger>
-                  <Link
-                    fontSize="md"
-                    mt={2}
-                    color="teal.500"
-                    href={mint.image}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Code whiteSpace="pre-wrap" width={"100%"}>
-                      {extractIpfsHash(mint.image)}
-                    </Code>{" "}
-                    {/* Displaying the extracted IPFS hash in code style */}
-                  </Link>
-                </PopoverTrigger>
-                {getPopoverContent(mint)}
-              </Popover>
+              <Text color="gray.500" fontSize="sm" mb={2}>
+                {mint?.description} {/* Display description in muted text color */}
+              </Text>
+              <Tag
+                size="sm"
+                variant="solid"
+                colorScheme={getTagColor(mint?.attributes[0].value)}
+                textTransform="capitalize" // Capitalize the first letter
+              >
+                {mint?.attributes[0].value} {/* Display trait type as a small tag */}
+              </Tag>
+              {/* Tooltip */}
+              <Tooltip label={`Verified IPFS hash for ${mint?.name}: ${extractIpfsHash(mint?.image)}`} placement="top">
+                <Link
+                  fontSize="md"
+                  mt={2}
+                  color="teal.500"
+                  href={mint?.image}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Code whiteSpace="pre-wrap" width={"100%"}>
+                    {extractIpfsHash(mint?.image)}
+                  </Code>{" "}
+                  {/* Displaying the extracted IPFS hash in code style */}
+                </Link>
+              </Tooltip>
             </Box>
           ))
         ) : (
