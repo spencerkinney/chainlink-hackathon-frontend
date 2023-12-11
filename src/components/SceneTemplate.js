@@ -10,6 +10,7 @@ import {
   Flex,
   Badge,
   Tag,
+  useToast
 } from '@chakra-ui/react';
 import ARScene from './ARScene';
 import CompletePage from './CompletePage';
@@ -22,6 +23,7 @@ const SceneTemplate = ({
   decisionChoices,
 }) => {
   const navigate = useNavigate();
+  const toast = useToast();
   const isSingleChoice = decisionChoices.length === 1;
   const [submitted, setSubmitted] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -31,9 +33,56 @@ const SceneTemplate = ({
   const badgeTitle = titleParts[0];
   const remainingTitle = titleParts.length > 1 ? titleParts[1] : '';
 
+  const handleMint = async () => {
+    if (window.ethereum) {
+      try {
+        // Requesting account access
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const account = accounts[0]; // Selecting the first account
+
+        // Creating a toast notification
+        toast({
+          title: "NFT Minting",
+          description: "Your NFT is being minted. Please confirm the transaction in Metamask.",
+          status: "info",
+          duration: 9000,
+          isClosable: true,
+        });
+
+        // Mock transaction parameters
+        const transactionParameters = {
+          nonce: '0x00', // Ignored by Metamask
+          to: '', // Required: recipient address
+          from: account, // Must match user's active address
+          value: '0x00', // Optional
+          gasPrice: '0x09184e72a000', // Optional
+          gas: '0x2710', // Optional
+          data: '0x0', // Required for contract interactions
+        };
+
+        // Sending the transaction
+        await window.ethereum.request({
+          method: 'eth_sendTransaction',
+          params: [transactionParameters],
+        });
+
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      console.log('Please install MetaMask!');
+    }
+  };
+
+
   const displayCompletePage = (currentSceneId) => {
-    setProgress(currentSceneId * 20);
-    setSubmitted(true);
+    if (currentSceneId === 5) {
+      // Special handling for last scene
+      handleMint();
+    } else {
+      setProgress(currentSceneId * 20);
+      setSubmitted(true);
+    }
   };
 
   if (submitted) {

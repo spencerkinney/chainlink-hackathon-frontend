@@ -7,6 +7,7 @@ import GameMasterPage from './components/GameMasterPage';
 import CharacterPage from './components/CharacterPage';
 import ImageGenerator from './components/ImageGenerator';
 import LatestMintsGallery from './components/LatestMintsGallery';
+import MintNFTPage from './components/MintNFTPage';
 
 function App() {
   // Scene data
@@ -114,6 +115,7 @@ function App() {
         <Route path="/character" element={<CharacterPage onGameStart={() => handleNextScene(1)} />} />
         <Route path="/sd" element={<ImageGenerator/>} />
         <Route path="/loot" element={<LatestMintsGallery/>} />
+        <Route path="/mint" element={<MintNFTPage/>} />
       </Routes>
     </Router>
   );
